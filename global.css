@@ -87,9 +87,10 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
-  /* Clip incidental horizontal overflow without creating a scroll
-     container, so position:sticky on the navbar keeps working. */
-  overflow-x: clip;
+  /* NOTE: no overflow clip on html/body — Safari/WebKit treats
+     overflow-x: clip here as a scroll container, which breaks the
+     sticky navbar. Each decorative section clips its own bleed
+     (overflow:hidden on #hero, .series-section, .ig-section, etc.). */
 }
 
 body {
@@ -99,7 +100,6 @@ body {
   font-weight: 400;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  overflow-x: clip;
 }
 
 img, picture { display: block; max-width: 100%; }
