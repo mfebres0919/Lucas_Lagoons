@@ -251,6 +251,121 @@
     });
   });
 
+  /* ── Quote wizard ─────────────────────────────────
+     Multi-step form. Step 1 picks the service, then the
+     sequence branches by series. Validates each step before
+     advancing; fake-submits to a success panel. */
+  (function quoteWizard() {
+    var form = document.getElementById('quoteForm');
+    if (!form) return;
+
+    var card     = form.closest('.quote-card');
+    var steps    = {};
+    form.querySelectorAll('.qf-step').forEach(function (s) { steps[s.id] = s; });
+
+    var SEQ = {
+      'Designer Series':  ['qfService', 'qfDesignerProject', 'qfContact', 'qfDesignerMessage', 'qfDesignerFinish'],
+      'Signature Series': ['qfService', 'qfSignatureProject', 'qfSignatureSource', 'qfContact', 'qfSignatureMessage', 'qfSignatureFinish']
+    };
+
+    var seq     = ['qfService'];
+    var current = 0;
+
+    var backBtn   = form.querySelector('.qf-back');
+    var nextBtn   = form.querySelector('.qf-next');
+    var submitBtn = form.querySelector('.qf-submit');
+    var bar       = card.querySelector('.qf-progress-bar span');
+    var progText  = card.querySelector('.qf-progress-text');
+
+    function chosenService() {
+      var r = form.querySelector('input[name="service"]:checked');
+      return r ? r.value : null;
+    }
+
+    function render() {
+      seq.forEach(function (id, i) {
+        steps[id].classList.toggle('is-active', i === current);
+      });
+      var last = seq.length > 1 && current === seq.length - 1;
+      backBtn.style.display   = current === 0 ? 'none' : '';
+      nextBtn.style.display   = last ? 'none' : '';
+      submitBtn.style.display = last ? '' : 'none';
+
+      if (seq.length > 1) {
+        bar.style.width = ((current + 1) / seq.length * 100) + '%';
+        progText.textContent = 'Step ' + (current + 1) + ' of ' + seq.length;
+      } else {
+        bar.style.width = '12%';
+        progText.textContent = 'Step 1';
+      }
+    }
+
+    function validate(id) {
+      var el = steps[id];
+      var ok = true;
+
+      // required radio groups
+      var groups = {};
+      el.querySelectorAll('input[type="radio"]').forEach(function (r) {
+        (groups[r.name] = groups[r.name] || []).push(r);
+      });
+      Object.keys(groups).forEach(function (name) {
+        var arr = groups[name];
+        var required = arr.some(function (r) { return r.required; });
+        var checked  = arr.some(function (r) { return r.checked; });
+        var grp = arr[0].closest('.qf-group');
+        if (required && !checked) { ok = false; if (grp) grp.classList.add('qf-group-invalid'); }
+        else if (grp) { grp.classList.remove('qf-group-invalid'); }
+      });
+
+      // required text / select / textarea / checkbox
+      el.querySelectorAll('input[required]:not([type="radio"]), select[required], textarea[required]').forEach(function (f) {
+        var bad = false;
+        if (f.type === 'checkbox') bad = !f.checked;
+        else if (!f.value.trim()) bad = true;
+        else if (f.type === 'email') bad = !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.value);
+        if (bad) {
+          ok = false;
+          f.classList.add('qf-invalid');
+          f.addEventListener('input',  function h() { f.classList.remove('qf-invalid'); f.removeEventListener('input', h); });
+          f.addEventListener('change', function h() { f.classList.remove('qf-invalid'); f.removeEventListener('change', h); });
+        }
+      });
+
+      return ok;
+    }
+
+    function go(i) {
+      current = i;
+      render();
+      if (card) card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    nextBtn.addEventListener('click', function () {
+      var id = seq[current];
+      if (!validate(id)) return;
+      if (id === 'qfService') seq = SEQ[chosenService()] || ['qfService'];
+      go(current + 1);
+    });
+
+    backBtn.addEventListener('click', function () {
+      if (current > 0) go(current - 1);
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!validate(seq[current])) return;
+      Object.keys(steps).forEach(function (id) { steps[id].classList.remove('is-active'); });
+      steps.qfSuccess.classList.add('is-active');
+      form.querySelector('.qf-nav').style.display = 'none';
+      bar.style.width = '100%';
+      progText.textContent = 'Complete';
+      if (card) card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+
+    render();
+  })();
+
   /* ── Scroll-to-top ───────────────────────────── */
   const toTop = document.querySelector('.scroll-top-btn');
   if (toTop) {
