@@ -427,7 +427,7 @@ p {
 /* ── Desktop nav links — hidden on mobile ── */
 .nav-links { display: none; }
 @media (min-width: 1024px) {
-  .nav-links { display: flex; align-items: center; gap: 0.35rem; }
+  .nav-links { display: flex; align-items: center; gap: 0.1rem; }
 }
 .nav-links > li { position: relative; }
 .nav-links > li > a,
@@ -437,13 +437,17 @@ p {
   gap: 0.35rem;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 0.95rem;
-  letter-spacing: 0.04em;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   color: rgba(255,255,255,0.82);
-  padding: 0.6rem 0.85rem;
+  padding: 0.5rem 0.6rem;
   border-radius: var(--radius-sm);
   transition: color var(--transition), background var(--transition);
+}
+@media (min-width: 1180px) {
+  .nav-links > li > a,
+  .nav-links > li > .nav-drop-toggle { font-size: 0.95rem; padding: 0.55rem 0.78rem; }
 }
 .nav-links > li > a:hover,
 .nav-links > li > a.is-active,
@@ -499,7 +503,7 @@ p {
   color: var(--white);
 }
 .nav-phone svg { width: 17px; height: 17px; color: var(--aqua-lt); }
-@media (min-width: 768px) { .nav-phone { display: inline-flex; } }
+@media (min-width: 1280px) { .nav-phone { display: inline-flex; } }
 .nav-actions .btn-primary { display: none; }
 @media (min-width: 1024px) { .nav-actions .btn-primary { display: inline-flex; } }
 

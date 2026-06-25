@@ -1,0 +1,195 @@
+/* ============================================================
+   LUCAS LAGOONS — css/blog.css
+   Inner-page styles for the Blog index + Blog article pages.
+   Reuses .blog-card etc. from styles.css; adds page hero,
+   listing grid, and article-body typography.
+   ============================================================ */
+
+/* ── Reusable inner-page hero banner ── */
+.page-hero {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  min-height: 320px;
+  padding: 6rem 0 3.5rem;
+  background: var(--ink);
+}
+.page-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: var(--ink-soft);
+}
+.page-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(7,32,47,0.7) 0%, rgba(7,32,47,0.82) 100%);
+}
+.page-hero .container { position: relative; z-index: 2; text-align: center; }
+.page-hero .eyebrow { color: var(--aqua-lt); }
+.page-hero h1 { color: var(--white); font-size: clamp(2.4rem, 6vw, 4rem); }
+.page-hero-crumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+}
+.page-hero-crumb a { color: rgba(255,255,255,0.7); transition: color var(--transition); }
+.page-hero-crumb a:hover { color: var(--aqua-lt); }
+.page-hero-crumb span { color: var(--aqua-lt); }
+
+
+/* ── Blog listing page ── */
+.blog-page { background: var(--bg-light); }
+
+/* Category pills */
+.blog-cats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: 3rem;
+}
+.blog-cat {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  background: var(--white);
+  border: 1.5px solid var(--grey-200);
+  padding: 0.55rem 1.2rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition), color var(--transition);
+}
+.blog-cat:hover { border-color: var(--aqua); color: var(--aqua-dk); }
+.blog-cat.is-active { background: var(--aqua); border-color: var(--aqua); color: var(--ink); }
+
+/* Listing grid — reuses .blog-card, overriding the carousel width */
+.blog-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.75rem;
+}
+@media (min-width: 600px) { .blog-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 980px) { .blog-grid { grid-template-columns: repeat(3, 1fr); } }
+.blog-grid .blog-card { width: auto; }
+
+/* Pagination */
+.blog-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 3.5rem;
+}
+.blog-page-btn {
+  min-width: 42px;
+  height: 42px;
+  padding: 0 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  background: var(--white);
+  border: 1.5px solid var(--grey-200);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition), color var(--transition);
+}
+.blog-page-btn:hover { border-color: var(--aqua); color: var(--aqua-dk); }
+.blog-page-btn.is-active { background: var(--aqua); border-color: var(--aqua); color: var(--ink); }
+.blog-page-btn svg { width: 16px; height: 16px; }
+
+
+/* ── Blog article (detail) page ── */
+.article-section { background: var(--bg-white); }
+.article { max-width: 760px; margin: 0 auto; }
+.article-lead {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--text-primary);
+  font-weight: 500;
+  margin-bottom: 2rem;
+}
+.article-body p { margin-bottom: 1.4rem; }
+.article-body h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  margin: 2.5rem 0 1rem;
+}
+.article-body h3 {
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  margin: 2rem 0 0.85rem;
+}
+.article-body ul { margin: 0 0 1.4rem 1.2rem; list-style: disc; }
+.article-body li { margin-bottom: 0.6rem; line-height: 1.7; }
+.article-body img,
+.article-figure img {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  margin: 1rem 0;
+}
+.article-figure figcaption {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 0.5rem;
+}
+.article-quote {
+  border-left: 4px solid var(--aqua);
+  padding: 0.5rem 0 0.5rem 1.5rem;
+  margin: 2rem 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.3rem;
+  line-height: 1.4;
+  color: var(--text-primary);
+}
+
+.article-share {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--grey-200);
+}
+.article-share span {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.article-share a {
+  width: 38px; height: 38px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1.5px solid var(--grey-200);
+  border-radius: 50%;
+  color: var(--text-body);
+  transition: background var(--transition), border-color var(--transition), color var(--transition);
+}
+.article-share a:hover { background: var(--aqua); border-color: var(--aqua); color: var(--ink); }
+.article-share svg { width: 16px; height: 16px; }
+
+/* Related posts band */
+.related { background: var(--bg-light); }

@@ -55,6 +55,9 @@
           <li><a href="#about">About</a></li>
           <li><a href="#series">Pool Series</a></li>
           <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#work">Our Work</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#blog">Blog</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
@@ -88,6 +91,9 @@
         <li><a href="#about" data-drawer-close>About</a></li>
         <li><a href="#series" data-drawer-close>Pool Series</a></li>
         <li><a href="#portfolio" data-drawer-close>Portfolio</a></li>
+        <li><a href="#work" data-drawer-close>Our Work</a></li>
+        <li><a href="#testimonials" data-drawer-close>Testimonials</a></li>
+        <li><a href="#blog" data-drawer-close>Blog</a></li>
         <li><a href="#contact" data-drawer-close>Contact</a></li>
       </ul>
     </nav>
@@ -445,7 +451,7 @@
     <div class="container">
 
       <div class="section-head is-centered">
-        <p class="eyebrow is-centered">Our Work</p>
+        <p class="eyebrow is-centered">Our Portfolio</p>
         <h2>Featured Pool Projects</h2>
         <p>A few of the backyards we've transformed into one-of-a-kind paradise — hover any project to take a closer look.</p>
       </div>
@@ -499,32 +505,51 @@
   </section>
 
   <!-- ══════════════════════════════════════════
-       GALLERY  (Ridgeline-style: filter tabs, drag carousel,
-       frosted-glass blur overlay on hover)
-       ⤵  DROP IMAGES IN: images/gallery/gallery-1..12.jpg
+       OUR WORK  (merged: Photos gallery + Instagram Reels — tabbed)
+       Dark section. Photos = filterable drag carousel.
+       Reels = autoplay vertical IG videos + Follow CTA.
   ═══════════════════════════════════════════ -->
-  <section id="gallery" class="gallery-section">
+  <section id="work" class="work-section">
+
+    <!-- Shape divider: white Portfolio drapes down into this dark section -->
+    <div class="top-wave" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+        <path d="M0 0v4c136 143.8 183.8-73.2 297 26.6 72.2 63.7 97 99 184.7 33.2a30.5 30.5 0 0 1 36.6 0c87.6 65.8 112.5 30.5 184.7-33.2C816.2-69.2 864 147.7 1000 4V0H0Z"></path>
+      </svg>
+    </div>
+
+    <span class="work-glow" aria-hidden="true"></span>
 
     <div class="container">
       <div class="section-head is-centered">
-        <p class="eyebrow is-centered">Our Projects</p>
-        <h2>Explore Our Paradise Builds</h2>
-        <p>Drag, swipe, or filter to wander through our custom lagoons, grottos, and modern waterscapes.</p>
+        <p class="eyebrow is-centered">Our Work</p>
+        <h2>See What We Create</h2>
+        <p>Explore our custom lagoons, grottos, and waterscapes — in photos and in motion.</p>
       </div>
 
-      <div class="gallery-filters" role="tablist" aria-label="Filter projects by style">
-        <button class="gallery-filter-btn is-active" data-filter="all">All Projects</button>
-        <button class="gallery-filter-btn" data-filter="zen">Modern Zen</button>
-        <button class="gallery-filter-btn" data-filter="caribbean">Caribbean Cove</button>
-        <button class="gallery-filter-btn" data-filter="natural">Northern Natural</button>
-        <button class="gallery-filter-btn" data-filter="grotto">Grottos</button>
+      <!-- Photos / Reels toggle -->
+      <div class="work-tabs" role="tablist" aria-label="Browse our work">
+        <button class="work-tab is-active" role="tab" aria-selected="true" data-worktab="photos">Photos</button>
+        <button class="work-tab" role="tab" aria-selected="false" data-worktab="reels">Reels</button>
       </div>
-
-      <p class="gallery-swipe-hint" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l-4 5 4 5M16 7l4 5-4 5"/></svg>
-        Drag or swipe to explore more projects
-      </p>
     </div>
+
+    <!-- ░░ PHOTOS PANEL ░░ -->
+    <div class="work-panel is-active" data-workpanel="photos">
+      <div class="container">
+        <div class="gallery-filters" role="tablist" aria-label="Filter projects by style">
+          <button class="gallery-filter-btn is-active" data-filter="all">All Projects</button>
+          <button class="gallery-filter-btn" data-filter="zen">Modern Zen</button>
+          <button class="gallery-filter-btn" data-filter="caribbean">Caribbean Cove</button>
+          <button class="gallery-filter-btn" data-filter="natural">Northern Natural</button>
+          <button class="gallery-filter-btn" data-filter="grotto">Grottos</button>
+        </div>
+
+        <p class="gallery-swipe-hint" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l-4 5 4 5M16 7l4 5-4 5"/></svg>
+          Drag or swipe to explore more projects
+        </p>
+      </div>
 
     <div class="gallery-carousel-outer">
       <div class="gallery-track-wrap" id="galleryTrackWrap">
@@ -693,34 +718,14 @@
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- ══════════════════════════════════════════
-       INSTAGRAM  (dark)
-       Vertical "reel" cards that autoplay muted/looping.
-       ⤵  DROP REEL VIDEOS IN: videos/reel-1..4.mp4  (vertical 9:16 mp4)
-          Optional posters: images/instagram/reel-1..4.jpg
-       Replace the @lucaslagoons handle + links with the real account.
-  ═══════════════════════════════════════════ -->
-  <section id="instagram" class="section-padding ig-section">
-
-    <!-- Shape divider: the white Portfolio drapes down into this dark section -->
-    <div class="top-wave" aria-hidden="true">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
-        <path d="M0 0v4c136 143.8 183.8-73.2 297 26.6 72.2 63.7 97 99 184.7 33.2a30.5 30.5 0 0 1 36.6 0c87.6 65.8 112.5 30.5 184.7-33.2C816.2-69.2 864 147.7 1000 4V0H0Z"></path>
-      </svg>
     </div>
+    <!-- /PHOTOS PANEL -->
 
-    <!-- subtle aqua ambient glow -->
-    <span class="ig-glow" aria-hidden="true"></span>
+    <!-- ░░ REELS PANEL ░░ -->
+    <div class="work-panel" data-workpanel="reels">
+      <div class="container">
 
-    <div class="container">
-
-      <div class="section-head is-centered">
-        <p class="eyebrow is-centered">@lucaslagoons</p>
-        <h2>Our Work In Real Time</h2>
-        <p>Go behind the build. Follow along on Instagram for fresh reels of our latest pools, grottos, and waterscapes as they come to life.</p>
-      </div>
+        <p class="reels-intro">Fresh from our Instagram — our latest builds in motion. Tap any reel to watch the full clip.</p>
 
       <div class="ig-reels">
 
@@ -785,14 +790,9 @@
         </a>
       </div>
 
+      </div>
     </div>
-
-    <!-- Bottom wave: dark Instagram spills into the light Testimonials below -->
-    <div class="bottom-wave" aria-hidden="true">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
-        <path d="M0 0v4c136 143.8 183.8-73.2 297 26.6 72.2 63.7 97 99 184.7 33.2a30.5 30.5 0 0 1 36.6 0c87.6 65.8 112.5 30.5 184.7-33.2C816.2-69.2 864 147.7 1000 4V0H0Z"></path>
-      </svg>
-    </div>
+    <!-- /REELS PANEL -->
   </section>
 
   <!-- ══════════════════════════════════════════
@@ -1193,6 +1193,160 @@
       </div>
 
     </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       BLOG  (light — Ridgeline-style carousel: 6 cards, 3 per view,
+       auto-advance + prev/next arrows + dots)
+       ⤵  Swap images to images/blog/blog-1..6.jpg when ready.
+  ═══════════════════════════════════════════ -->
+  <section id="blog">
+
+    <!-- Shape divider: dark Testimonials drapes down into this light section -->
+    <div class="top-wave" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+        <path d="M0 0v4c136 143.8 183.8-73.2 297 26.6 72.2 63.7 97 99 184.7 33.2a30.5 30.5 0 0 1 36.6 0c87.6 65.8 112.5 30.5 184.7-33.2C816.2-69.2 864 147.7 1000 4V0H0Z"></path>
+      </svg>
+    </div>
+
+    <div class="container">
+      <div class="blog-header reveal fade-up">
+        <p class="eyebrow is-centered">Pool Tips &amp; Insights</p>
+        <h2>From The Lagoon Journal</h2>
+        <p>Design inspiration, process deep-dives, and honest advice for building your dream backyard paradise.</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="blog-carousel-outer" id="blogCarouselOuter">
+        <div class="blog-track-clip">
+          <div class="blog-track" id="blogTrack">
+
+            <!-- Card 1 -->
+            <article class="blog-card">
+              <div class="blog-card-img-wrap">
+                <img src="images/gallery/gallery-11.jpg" alt="What makes a Lucas Lagoon different from a standard pool" width="480" height="300" loading="lazy" decoding="async" />
+                <div class="blog-card-meta">
+                  <span class="blog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>Lucas Lagoons</span>
+                  <span class="blog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"/></svg>Design</span>
+                  <span class="blog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25"/></svg>Jun 10, 2026</span>
+                </div>
+              </div>
+              <div class="blog-card-body">
+                <h3 class="blog-card-title">What Makes a Lucas Lagoon Different From a Standard Pool</h3>
+                <p class="blog-card-excerpt">Anyone can pour a rectangle of concrete. We engineer over-built shells, sculpt real rock, and design around the way you actually live outdoors. Here's what sets a true lagoon apart.</p>
+                <a href="html/blog.html" class="blog-card-link">Read More <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+              </div>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="blog-card">
+              <div class="blog-card-img-wrap">
+                <img src="images/gallery/gallery-12.jpg" alt="Designer vs Signature Series — which path fits your project" width="480" height="300" loading="lazy" decoding="async" />
+                <div class="blog-card-meta">
+                  <span class="blog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>Lucas Lagoons</span>
+                  <span class="blog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"/></svg>Process</span>
+                  <span class="blog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25"/></svg>May 22, 2026</span>
+                </div>
+              </div>
+              <div class="blog-card-body">
+                <h3 class="blog-card-title">Designer vs. Signature Series: Which Path Fits Your Project?</h3>
+                <p class="blog-card-excerpt">Both deliver a true Lucas Lagoons design — the difference is who builds it and your budget. We break down the two paths so you know exactly where your project lands before you inquire.</p>
+                <a href="html/blog.html" class="blog-card-link">Read More <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+              </div>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="blog-card">
+              <div class="blog-card-img-wrap">
+                <img src="images/gallery/gallery-13.jpg" alt="The art of the grotto — building waterfalls that last" width="480" height="300" loading="lazy" decoding="async" />
+                <div class="blog-card-meta">
+                  <span class="blog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>Lucas Lagoons</span>
+                  <span class="blog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"/></svg>Craftsmanship</span>
+                  <span class="blog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25"/></svg>May 3, 2026</span>
+                </div>
+              </div>
+              <div class="blog-card-body">
+                <h3 class="blog-card-title">The Art of the Grotto: Building Waterfalls That Last a Lifetime</h3>
+                <p class="blog-card-excerpt">A grotto isn't stacked stone — it's a structure that has to hold tons of rock and water for decades. Here's how our crew engineers cave systems and waterfalls that never settle or leak.</p>
+                <a href="html/blog.html" class="blog-card-link">Read More <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+              </div>
+            </article>
+
+            <!-- Card 4 -->
+            <article class="blog-card">
+              <div class="blog-card-img-wrap">
+                <img src="images/gallery/gallery-14.jpg" alt="Budgeting a luxury lagoon — what your budget builds" width="480" height="300" loading="lazy" decoding="async" />
+                <div class="blog-card-meta">
+                  <span class="blog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>Lucas Lagoons</span>
+                  <span class="blog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"/></svg>Pricing</span>
+                  <span class="blog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25"/></svg>Apr 14, 2026</span>
+                </div>
+              </div>
+              <div class="blog-card-body">
+                <h3 class="blog-card-title">Budgeting a Luxury Lagoon: What $250K to $750K+ Really Builds</h3>
+                <p class="blog-card-excerpt">Where does the money actually go on a high-end build? We pull back the curtain on shells, rockwork, finishes, landscaping, and the add-ons that define each tier of investment.</p>
+                <a href="html/blog.html" class="blog-card-link">Read More <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+              </div>
+            </article>
+
+            <!-- Card 5 -->
+            <article class="blog-card">
+              <div class="blog-card-img-wrap">
+                <img src="images/gallery/gallery-15.jpg" alt="From sketch to splash — inside our custom design process" width="480" height="300" loading="lazy" decoding="async" />
+                <div class="blog-card-meta">
+                  <span class="blog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>Lucas Lagoons</span>
+                  <span class="blog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"/></svg>Process</span>
+                  <span class="blog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25"/></svg>Mar 28, 2026</span>
+                </div>
+              </div>
+              <div class="blog-card-body">
+                <h3 class="blog-card-title">From Sketch to Splash: Inside Our Custom Design Process</h3>
+                <p class="blog-card-excerpt">Every lagoon starts with your vision and your property. Walk through how we go from the first concept sketch to 3D renderings to the day the water finally turns on.</p>
+                <a href="html/blog.html" class="blog-card-link">Read More <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+              </div>
+            </article>
+
+            <!-- Card 6 -->
+            <article class="blog-card">
+              <div class="blog-card-img-wrap">
+                <img src="images/gallery/gallery-16.jpg" alt="Tropical landscaping that brings your lagoon to life" width="480" height="300" loading="lazy" decoding="async" />
+                <div class="blog-card-meta">
+                  <span class="blog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>Lucas Lagoons</span>
+                  <span class="blog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"/></svg>Outdoor Living</span>
+                  <span class="blog-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25"/></svg>Mar 9, 2026</span>
+                </div>
+              </div>
+              <div class="blog-card-body">
+                <h3 class="blog-card-title">Tropical Landscaping That Brings Your Lagoon to Life</h3>
+                <p class="blog-card-excerpt">The water is only half the magic. The right palms, boulders, and lush planting are what turn a pool into a private paradise. Here's how we design landscaping that completes the scene.</p>
+                <a href="html/blog.html" class="blog-card-link">Read More <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+              </div>
+            </article>
+
+          </div>
+        </div>
+
+        <!-- Desktop prev/next arrows -->
+        <div class="blog-arrows">
+          <button class="blog-arrow-btn" id="blogPrev" aria-label="Previous posts">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          </button>
+          <button class="blog-arrow-btn" id="blogNext" aria-label="Next posts">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Dots + View All -->
+      <div class="blog-footer">
+        <div class="blog-dots" id="blogDots" aria-label="Blog carousel navigation"></div>
+        <a href="html/blog.html" class="btn-primary blog-viewall">View All Articles
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+
   </section>
 
   <!-- ══════════════════════════════════════════

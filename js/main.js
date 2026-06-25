@@ -53,11 +53,14 @@
 
   /* ── Scrollspy: highlight the nav link for the section in view ── */
   var spyMap = [
-    { id: 'hero',      href: 'index.html' },
-    { id: 'about',     href: '#about' },
-    { id: 'series',    href: '#series' },
-    { id: 'portfolio', href: '#portfolio' },
-    { id: 'contact',   href: '#contact' }
+    { id: 'hero',         href: 'index.html' },
+    { id: 'about',        href: '#about' },
+    { id: 'series',       href: '#series' },
+    { id: 'portfolio',    href: '#portfolio' },
+    { id: 'work',         href: '#work' },
+    { id: 'testimonials', href: '#testimonials' },
+    { id: 'blog',         href: '#blog' },
+    { id: 'contact',      href: '#contact' }
   ];
   var spyLinks = {};
   spyMap.forEach(function (s) {
@@ -280,6 +283,33 @@
     });
 
     stack.addEventListener('mouseleave', function () { if (canHover.matches) setActive(defaultCard); });
+  })();
+
+  /* ── Our Work: Photos / Reels toggle ── */
+  (function workTabs() {
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('.work-tab'));
+    var panels = Array.prototype.slice.call(document.querySelectorAll('.work-panel'));
+    if (!tabs.length || !panels.length) return;
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var key = tab.getAttribute('data-worktab');
+        tabs.forEach(function (t) {
+          var on = t === tab;
+          t.classList.toggle('is-active', on);
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        panels.forEach(function (p) {
+          p.classList.toggle('is-active', p.getAttribute('data-workpanel') === key);
+        });
+        // Nudge the reels to play when their panel becomes visible
+        if (key === 'reels') {
+          document.querySelectorAll('.work-panel[data-workpanel="reels"] video.reel-video').forEach(function (v) {
+            var pr = v.play();
+            if (pr && typeof pr.catch === 'function') pr.catch(function () {});
+          });
+        }
+      });
+    });
   })();
 
   /* ── Gallery: filter tabs · desktop drag · mobile swipe/tap ── */
@@ -549,6 +579,62 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });
     update();
+  })();
+
+  /* ── Blog carousel ────────────────────────────────
+     6 cards, 3/2/1 per view; auto-advance + arrows + dots. */
+  (function blogCarousel() {
+    var track = document.getElementById('blogTrack');
+    var dots  = document.getElementById('blogDots');
+    var outer = document.getElementById('blogCarouselOuter');
+    if (!track || !dots) return;
+
+    var total = track.querySelectorAll('.blog-card').length;
+    var current = 0;
+    var timer = null;
+
+    function perView() { if (window.innerWidth >= 1024) return 3; if (window.innerWidth >= 600) return 2; return 1; }
+    function totalSlides() { return Math.max(0, total - perView()); }
+
+    function buildDots() {
+      dots.innerHTML = '';
+      for (var i = 0; i <= totalSlides(); i++) {
+        var d = document.createElement('button');
+        d.className = 'blog-dot' + (i === 0 ? ' is-active' : '');
+        d.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+        (function (idx) { d.addEventListener('click', function () { go(idx); restart(); }); })(i);
+        dots.appendChild(d);
+      }
+    }
+
+    function go(index) {
+      current = Math.min(Math.max(index, 0), totalSlides());
+      var card = track.querySelector('.blog-card');
+      var w = card ? card.offsetWidth + 24 : 0;   // card + 1.5rem gap
+      track.style.transform = 'translateX(-' + (current * w) + 'px)';
+      Array.prototype.forEach.call(dots.querySelectorAll('.blog-dot'), function (dot, i) {
+        dot.classList.toggle('is-active', i === current);
+      });
+    }
+    function next() { go(current >= totalSlides() ? 0 : current + 1); }
+    function start() { stop(); timer = window.setInterval(next, 6000); }
+    function stop() { if (timer) { window.clearInterval(timer); timer = null; } }
+    function restart() { start(); }
+
+    var prev = document.getElementById('blogPrev');
+    var nxt  = document.getElementById('blogNext');
+    if (prev) prev.addEventListener('click', function () { go(current <= 0 ? totalSlides() : current - 1); restart(); });
+    if (nxt)  nxt.addEventListener('click',  function () { next(); restart(); });
+
+    if (outer) {
+      outer.addEventListener('mouseenter', stop);
+      outer.addEventListener('mouseleave', start);
+    }
+    window.addEventListener('resize', function () { buildDots(); go(0); }, { passive: true });
+
+    buildDots();
+    go(0);
+    start();
   })();
 
   /* ── Scroll-to-top ───────────────────────────── */
