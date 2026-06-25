@@ -102,16 +102,25 @@
 
   <!-- ══════════════════════════════════════════
        HERO
-       Full-screen cinematic background video + centered content.
-       Video: videos/hero-video.mp4  ·  poster fallback: images/hero/hero-1.jpg
+       Full-screen image carousel (crossfade + alternating Ken-Burns)
+       + centered content. 10 gallery photos; dots sync via main.js.
   ═══════════════════════════════════════════ -->
   <section id="hero">
 
-    <!-- Cinematic background video (muted, autoplay, loop) -->
-    <video class="hero-video" autoplay muted loop playsinline preload="auto"
-           poster="images/hero/hero-1.jpg">
-      <source src="videos/hero-video.mp4" type="video/mp4" />
-    </video>
+    <!-- Background carousel — crossfades + alternating Ken-Burns (main.js).
+         Uses gallery photos; swap paths to feature different images. -->
+    <div class="hero-carousel" aria-hidden="true">
+      <div class="hero-slide is-active" style="background-image:url('images/gallery/gallery-1.jpg')"></div>
+      <div class="hero-slide" style="background-image:url('images/gallery/gallery-2.jpg')"></div>
+      <div class="hero-slide" style="background-image:url('images/gallery/gallery-3.jpg')"></div>
+      <div class="hero-slide" style="background-image:url('images/gallery/gallery-4.jpg')"></div>
+      <div class="hero-slide" style="background-image:url('images/gallery/gallery-5.jpg')"></div>
+      <div class="hero-slide" style="background-image:url('images/gallery/gallery-6.jpg')"></div>
+      <div class="hero-slide" style="background-image:url('images/gallery/gallery-7.jpg')"></div>
+      <div class="hero-slide" style="background-image:url('images/gallery/gallery-8.jpg')"></div>
+      <div class="hero-slide" style="background-image:url('images/gallery/gallery-9.jpg')"></div>
+      <div class="hero-slide" style="background-image:url('images/gallery/gallery-10.jpg')"></div>
+    </div>
     <div class="hero-overlay" aria-hidden="true"></div>
 
     <div class="container hero-inner">
@@ -149,10 +158,19 @@
       </div>
     </div>
 
-    <!-- Scroll cue -->
-    <a href="#about" class="hero-scroll" aria-label="Scroll to explore">
-      <span></span>
-    </a>
+    <!-- Carousel dots -->
+    <div class="hero-dots" role="tablist" aria-label="Hero background slides">
+      <button class="hero-dot is-active" aria-label="Slide 1"></button>
+      <button class="hero-dot" aria-label="Slide 2"></button>
+      <button class="hero-dot" aria-label="Slide 3"></button>
+      <button class="hero-dot" aria-label="Slide 4"></button>
+      <button class="hero-dot" aria-label="Slide 5"></button>
+      <button class="hero-dot" aria-label="Slide 6"></button>
+      <button class="hero-dot" aria-label="Slide 7"></button>
+      <button class="hero-dot" aria-label="Slide 8"></button>
+      <button class="hero-dot" aria-label="Slide 9"></button>
+      <button class="hero-dot" aria-label="Slide 10"></button>
+    </div>
   </section>
 
   <!-- ══════════════════════════════════════════
@@ -290,26 +308,20 @@
           Animal Planet — <em>Insane Pools: Off The Deep End</em>
         </span>
       </div>
+    </div>
 
-      <div class="creds-stats">
-        <div class="creds-stat reveal fade-up">
-          <span class="creds-stat-num" data-count="20" data-suffix="+">0</span>
-          <span class="creds-stat-label">Years of Artistry</span>
-        </div>
-        <div class="creds-stat reveal fade-up delay-1">
-          <span class="creds-stat-num" data-count="4">0</span>
-          <span class="creds-stat-label">Seasons on National TV</span>
-        </div>
-        <div class="creds-stat reveal fade-up delay-2">
-          <span class="creds-stat-num" data-count="200" data-suffix="+">0</span>
-          <span class="creds-stat-label">Custom Lagoons Built</span>
-        </div>
-        <div class="creds-stat reveal fade-up delay-3">
-          <span class="creds-stat-num" data-count="12">0</span>
-          <span class="creds-stat-label">Design Awards Won</span>
-        </div>
+    <!-- Stats marquee — continuous left-to-right scroll (duplicated in main.js) -->
+    <div class="creds-marquee">
+      <div class="creds-track">
+        <div class="creds-stat"><span class="creds-stat-num">20+</span><span class="creds-stat-label">Years of Artistry</span></div>
+        <div class="creds-stat"><span class="creds-stat-num">4</span><span class="creds-stat-label">Seasons on National TV</span></div>
+        <div class="creds-stat"><span class="creds-stat-num">200+</span><span class="creds-stat-label">Custom Lagoons Built</span></div>
+        <div class="creds-stat"><span class="creds-stat-num">12</span><span class="creds-stat-label">Design Awards Won</span></div>
+        <div class="creds-stat"><span class="creds-stat-num">20+</span><span class="creds-stat-label">Years of Artistry</span></div>
+        <div class="creds-stat"><span class="creds-stat-num">4</span><span class="creds-stat-label">Seasons on National TV</span></div>
+        <div class="creds-stat"><span class="creds-stat-num">200+</span><span class="creds-stat-label">Custom Lagoons Built</span></div>
+        <div class="creds-stat"><span class="creds-stat-num">12</span><span class="creds-stat-label">Design Awards Won</span></div>
       </div>
-
     </div>
   </section>
 
@@ -438,46 +450,48 @@
         <p>A few of the backyards we've transformed into one-of-a-kind paradise — hover any project to take a closer look.</p>
       </div>
 
-      <div class="portfolio-grid">
+      <!-- Stacked expanding cards: hover (desktop) / tap (mobile) brings a
+           card to the front and expands it. Driven by main.js. -->
+      <div class="stack">
 
-        <!-- Project 1 -->
-        <a href="html/portfolio.html" class="project-card reveal fade-up">
-          <div class="project-img" style="background-image:url('images/portfolio/project-1.jpg')"></div>
-          <div class="project-body">
-            <h3 class="project-title">Pool-A-Vida</h3>
-            <span class="project-rule"></span>
-            <p class="project-desc">A South Florida backyard reimagined as a Costa Rican–style custom pool paradise, rich with rockwork and tropical planting.</p>
-            <span class="project-more">Read More
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
+        <article class="stack-card is-active" style="background-image:url('images/portfolio/project-1.jpg')">
+          <div class="stack-card-shade" aria-hidden="true"></div>
+          <div class="stack-card-body">
+            <h3 class="stack-card-title">Pool-A-Vida</h3>
+            <div class="stack-card-foot">
+              <p class="stack-card-desc">A South Florida backyard reimagined as a Costa Rican–style custom pool paradise, rich with rockwork and tropical planting.</p>
+              <a href="html/portfolio.html" class="btn-primary stack-card-btn">View Project
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
           </div>
-        </a>
+        </article>
 
-        <!-- Project 2 -->
-        <a href="html/portfolio.html" class="project-card reveal fade-up delay-1">
-          <div class="project-img" style="background-image:url('images/portfolio/project-2.jpg')"></div>
-          <div class="project-body">
-            <h3 class="project-title">Rocks of Love</h3>
-            <span class="project-rule"></span>
-            <p class="project-desc">A backyard custom pool resort in Wellington, Florida — designed and built to feel like a private luxury getaway.</p>
-            <span class="project-more">Read More
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
+        <article class="stack-card" style="background-image:url('images/portfolio/project-2.jpg')">
+          <div class="stack-card-shade" aria-hidden="true"></div>
+          <div class="stack-card-body">
+            <h3 class="stack-card-title">Rocks of Love</h3>
+            <div class="stack-card-foot">
+              <p class="stack-card-desc">A backyard custom pool resort in Wellington, Florida — designed and built to feel like a private luxury getaway.</p>
+              <a href="html/portfolio.html" class="btn-primary stack-card-btn">View Project
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
           </div>
-        </a>
+        </article>
 
-        <!-- Project 3 -->
-        <a href="html/portfolio.html" class="project-card reveal fade-up delay-2">
-          <div class="project-img" style="background-image:url('images/portfolio/project-3.jpg')"></div>
-          <div class="project-body">
-            <h3 class="project-title">Small Yard, Big Dreams</h3>
-            <span class="project-rule"></span>
-            <p class="project-desc">Proof that no yard is too small — a compact Nokomis lot transformed into a dream swimming pool retreat.</p>
-            <span class="project-more">Read More
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
+        <article class="stack-card" style="background-image:url('images/portfolio/project-3.jpg')">
+          <div class="stack-card-shade" aria-hidden="true"></div>
+          <div class="stack-card-body">
+            <h3 class="stack-card-title">Small Yard, Big Dreams</h3>
+            <div class="stack-card-foot">
+              <p class="stack-card-desc">Proof that no yard is too small — a compact Nokomis lot transformed into a dream swimming pool retreat.</p>
+              <a href="html/portfolio.html" class="btn-primary stack-card-btn">View Project
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
           </div>
-        </a>
+        </article>
 
       </div>
 
@@ -788,6 +802,11 @@
        ⤵  DROP AVATARS IN: images/testimonials/t1..t6.jpg (square)
   ═══════════════════════════════════════════ -->
   <section id="testimonials" class="section-padding tm-section">
+
+    <!-- Parallax photo background (drives via main.js) + dark overlay.
+         ⤵  Uses a gallery photo — swap the path to whichever you like. -->
+    <div class="tm-bg" data-parallax style="background-image:url('images/gallery/gallery-3.jpg')"></div>
+    <div class="tm-overlay" aria-hidden="true"></div>
 
     <div class="container">
       <div class="section-head is-centered">

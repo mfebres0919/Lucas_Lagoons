@@ -241,15 +241,46 @@
     start();
   })();
 
-  /* ── Testimonials marquee ─────────────────────────
-     Duplicate each track's cards so the -50% loop is seamless. */
-  document.querySelectorAll('.tm-track').forEach(function (track) {
+  /* ── Marquees (testimonials + credentials stats) ──
+     Duplicate each track's children so the -50% loop is seamless. */
+  document.querySelectorAll('.tm-track, .creds-track').forEach(function (track) {
     Array.prototype.slice.call(track.children).forEach(function (card) {
       var clone = card.cloneNode(true);
       clone.setAttribute('aria-hidden', 'true');
       track.appendChild(clone);
     });
   });
+
+  /* ── Stacked project cards (Featured Pool Projects) ──
+     Desktop: hover brings a card to the front + expands it.
+     Touch: tap a card to expand it. */
+  (function projectStack() {
+    var stack = document.querySelector('.stack');
+    if (!stack) return;
+    var cards = Array.prototype.slice.call(stack.querySelectorAll('.stack-card'));
+    if (!cards.length) return;
+
+    var canHover = window.matchMedia('(hover: hover)');
+    var defaultCard = cards.filter(function (c) { return c.classList.contains('is-active'); })[0] || cards[0];
+
+    function setActive(card) {
+      cards.forEach(function (c) { c.classList.toggle('is-active', c === card); });
+    }
+
+    cards.forEach(function (card) {
+      card.addEventListener('mouseenter', function () { if (canHover.matches) setActive(card); });
+      // Tap (touch) expands; if it's already active, let the link through.
+      card.addEventListener('click', function (e) {
+        if (canHover.matches) return;                 // desktop uses hover
+        if (!card.classList.contains('is-active') && !e.target.closest('.stack-card-link')) {
+          e.preventDefault();
+          setActive(card);
+        }
+      });
+    });
+
+    stack.addEventListener('mouseleave', function () { if (canHover.matches) setActive(defaultCard); });
+  })();
 
   /* ── Gallery: filter tabs · desktop drag · mobile swipe/tap ── */
   (function galleryCarousel() {
@@ -489,6 +520,35 @@
     });
 
     render();
+  })();
+
+  /* ── Parallax backgrounds ─────────────────────────
+     Drift any [data-parallax] layer slower than the page scroll so its
+     section's photo glides as you scroll past. Layer is sized taller
+     than its section (CSS) so it never exposes a gap. */
+  (function parallax() {
+    var layers = Array.prototype.slice.call(document.querySelectorAll('[data-parallax]'));
+    if (!layers.length || !window.requestAnimationFrame) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var ticking = false;
+    function update() {
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      layers.forEach(function (layer) {
+        var section = layer.parentElement;
+        var rect = section.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > vh) return;     // off-screen → skip
+        var progress = (vh - rect.top) / (vh + rect.height);  // 0 → 1 as it passes through
+        var y = (progress - 0.5) * section.offsetHeight * 0.3;
+        layer.style.transform = 'translate3d(0,' + y.toFixed(1) + 'px,0)';
+      });
+      ticking = false;
+    }
+    function onScroll() { if (!ticking) { ticking = true; window.requestAnimationFrame(update); } }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    update();
   })();
 
   /* ── Scroll-to-top ───────────────────────────── */

@@ -212,7 +212,7 @@ p {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: var(--lime-green);
+  background: var(--aqua);
   color: var(--ink);
   font-family: var(--font-display);
   font-weight: 700;
@@ -220,7 +220,7 @@ p {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   padding: 0.85rem 1.6rem;
-  border: 2px solid var(--lime-green);
+  border: 2px solid var(--aqua);
   border-radius: var(--radius-sm);
   transition: background var(--transition), border-color var(--transition), transform var(--transition), box-shadow var(--transition);
   white-space: nowrap;

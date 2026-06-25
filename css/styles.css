@@ -49,46 +49,6 @@
   .hero-slide.is-active:nth-child(even) { animation: none; transform: scale(1); }
 }
 
-/* ── Cinematic background video ── */
-.hero-video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
-}
-
-/* ── Scroll-down cue ── */
-.hero-scroll {
-  position: absolute;
-  bottom: 1.6rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 3;
-  width: 26px;
-  height: 42px;
-  border: 2px solid rgba(255,255,255,0.55);
-  border-radius: 14px;
-  display: flex;
-  justify-content: center;
-}
-.hero-scroll span {
-  width: 4px;
-  height: 8px;
-  margin-top: 7px;
-  border-radius: 2px;
-  background: var(--aqua-lt);
-  animation: hero-scroll-dot 1.8s ease-in-out infinite;
-}
-@keyframes hero-scroll-dot {
-  0%   { opacity: 0; transform: translateY(-4px); }
-  40%  { opacity: 1; }
-  80%  { opacity: 0; transform: translateY(10px); }
-  100% { opacity: 0; }
-}
-@media (prefers-reduced-motion: reduce) { .hero-scroll span { animation: none; } }
-
 /* Dark gradient overlay so white text stays legible over any photo */
 .hero-overlay {
   position: absolute;
@@ -168,7 +128,7 @@
   justify-content: center;
   gap: 0.55rem;
   min-width: 220px;
-  background: var(--lime-green);
+  background: var(--aqua);
   color: var(--ink);
   font-family: var(--font-display);
   font-weight: 700;
@@ -176,7 +136,7 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   padding: 1.05rem 1.9rem;
-  border: 2px solid var(--lime-green);
+  border: 2px solid var(--aqua);
   border-radius: var(--radius-sm);
   box-shadow: 0 12px 34px rgba(24,191,216,0.30);
   transition: background var(--transition), border-color var(--transition), transform var(--transition), box-shadow var(--transition);
@@ -270,8 +230,8 @@
 @media (min-width: 768px) { .top-wave { height: 85px; } }
 .top-wave svg { display: block; width: 100%; height: 100%; }
 /* fill = color of the section directly above each */
-#instagram .top-wave path { fill: var(--bg-white); }   /* portfolio (white) above */
-#contact   .top-wave path { fill: var(--bg-light); }    /* testimonials (light) above */
+#instagram .top-wave path { fill: var(--bg-white); }   /* gallery (white) above */
+#contact   .top-wave path { fill: var(--ink); }         /* testimonials (dark photo) above */
 
 /* Bottom wave — flipped, so a dark section spills into the lighter
    section below it. fill = color of the section directly BELOW each. */
@@ -289,7 +249,7 @@
 @media (min-width: 768px) { .bottom-wave { height: 85px; } }
 .bottom-wave svg { display: block; width: 100%; height: 100%; }
 #series    .bottom-wave path { fill: var(--bg-white); }   /* portfolio (white) below */
-#instagram .bottom-wave path { fill: var(--bg-light); }   /* testimonials (light) below */
+#instagram .bottom-wave path { fill: var(--ink); }        /* testimonials (dark photo) below */
 
 
 /* ══════════════════════════════════════════════
@@ -328,15 +288,38 @@
 .creds-asseen-name em { color: var(--aqua-dk); font-style: italic; font-weight: 700; }
 .creds-asseen-name svg { width: 24px; height: 24px; color: var(--aqua); flex-shrink: 0; }
 
-.creds-stats {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem 1rem;
+/* Continuous left-to-right marquee */
+.creds-marquee {
+  position: relative;
+  overflow: hidden;
   border-top: 1px solid var(--grey-200);
-  padding-top: 2.75rem;
+  padding: 2.5rem 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
 }
-@media (min-width: 768px) { .creds-stats { grid-template-columns: repeat(4, 1fr); } }
-.creds-stat { display: flex; flex-direction: column; gap: 0.35rem; }
+.creds-track {
+  display: flex;
+  width: max-content;
+  animation: creds-scroll 38s linear infinite;
+}
+.creds-marquee:hover .creds-track { animation-play-state: paused; }
+@keyframes creds-scroll {
+  from { transform: translateX(-50%); }   /* moves left → right */
+  to   { transform: translateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .creds-track { animation: none; justify-content: center; width: 100%; flex-wrap: wrap; gap: 2rem; }
+}
+.creds-stat {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  align-items: center;
+  text-align: center;
+  padding: 0 2.75rem;
+  border-right: 1px solid var(--grey-200);
+}
 .creds-stat-num {
   font-family: var(--font-display);
   font-weight: 900;
@@ -394,8 +377,22 @@
 }
 
 /* ── Left media + badge ── */
-.about-media { position: relative; }
+.about-media { position: relative; isolation: isolate; }
+/* Accent shape peeking out behind the photo, offset up & to the left */
+.about-media::before {
+  content: '';
+  position: absolute;
+  top: -1.5rem;
+  left: -1.5rem;
+  width: 100%;
+  height: 100%;
+  background: #22cbe15b;
+  border-radius: var(--radius-lg);
+  z-index: 0;
+}
 .about-img-main {
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: 340px;
   object-fit: cover;
@@ -409,6 +406,7 @@
 
 .about-badge {
   position: absolute;
+  z-index: 2;
   left: 1.25rem;
   bottom: 1.25rem;
   display: flex;
@@ -734,101 +732,99 @@
 
 .portfolio-section { background: var(--bg-white); }
 
-/* Grid */
-.portfolio-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.75rem;
-}
-@media (min-width: 640px) { .portfolio-grid { grid-template-columns: 1fr 1fr; } }
-@media (min-width: 980px) { .portfolio-grid { grid-template-columns: repeat(3, 1fr); } }
+/* ── Stacked expanding cards ──
+   Mobile: simple vertical photo cards (full content shown).
+   Desktop: overlapping accordion — hover/tap expands one to the front. */
+.stack { display: flex; flex-direction: column; gap: 1.1rem; }
 
-/* Card */
-.project-card {
-  display: flex;
-  flex-direction: column;
-  height: 440px;
-  background: var(--white);
+.stack-card {
+  position: relative;
+  height: 300px;
   border-radius: var(--radius-lg);
-  border: .3px solid rgba(128, 128, 128, 0.44);
   overflow: hidden;
-  box-shadow: var(--shadow-sm);
-  transition: transform var(--transition), box-shadow var(--transition);
-}
-.project-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow);
-}
-
-/* Image area (shrinks as the panel grows on hover) */
-.project-img {
-  flex: 1 1 auto;
-  min-height: 0;
-  background-color: var(--grey-200);
+  background-color: var(--ink-soft);     /* fallback before photo loads */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
-
-/* Bottom panel */
-.project-body {
-  flex: 0 0 auto;
-  background: var(--grey-100);
-  padding: 1.5rem 1.5rem 1.4rem;
-  transition: background var(--transition);
+.stack-card-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(7,32,47,0.5) 0%, rgba(7,32,47,0.12) 38%, rgba(7,32,47,0.88) 100%);
 }
-.project-title {
+.stack-card-body {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.6rem;
+}
+.stack-card-title {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
+  line-height: 1.1;
   letter-spacing: 0.01em;
   text-transform: uppercase;
-  color: var(--text-primary);
-  margin-bottom: 0.85rem;
-  transition: color var(--transition);
+  color: var(--white);
+  text-shadow: 0 2px 16px rgba(0,0,0,0.45);
 }
-.project-rule {
-  display: block;
-  width: 46px;
-  height: 3px;
-  background: var(--aqua);
-  transition: background var(--transition);
-}
-.project-desc {
+.stack-card-desc {
   font-size: 0.92rem;
-  color: var(--text-body);
   line-height: 1.6;
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: max-height var(--transition-slow), opacity var(--transition-slow), margin var(--transition-slow);
+  color: rgba(255,255,255,0.88);
+  margin-bottom: 0.9rem;
+  max-width: 40ch;
 }
-.project-more {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  margin-top: 0.85rem;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 0.85rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-primary);
-  transition: color var(--transition);
-}
-.project-more svg { width: 15px; height: 15px; }
+.stack-card-foot .btn-primary { margin-top: 0.2rem; }
 
-/* Hover state — panel turns aqua, description reveals, image shrinks */
-.project-card:hover .project-body { background: var(--aqua); }
-.project-card:hover .project-rule { background: var(--ink); }
-.project-card:hover .project-desc {
-  max-height: 140px;
-  opacity: 1;
-  margin-top: 0.85rem;
+/* Aqua glow ring on the active card so it's clear which one you're on */
+.stack-card.is-active {
+  box-shadow: 0 0 0 3px var(--aqua), 0 0 30px 2px rgba(34,203,225,0.45);
 }
-.project-card:hover .project-title,
-.project-card:hover .project-desc,
-.project-card:hover .project-more { color: var(--ink); }
+
+/* Desktop: horizontal overlapping accordion */
+@media (min-width: 768px) {
+  .stack { flex-direction: row; gap: 0; height: 480px; }
+  .stack-card {
+    flex: 1 1 0;
+    height: 100%;
+    margin-left: -2rem;                  /* overlap onto the previous card */
+    box-shadow: -16px 0 38px rgba(0,0,0,0.32);
+    cursor: pointer;
+    transition: flex-grow 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .stack-card:first-child { margin-left: 0; }
+  .stack-card:nth-child(1) { z-index: 1; }
+  .stack-card:nth-child(2) { z-index: 2; }
+  .stack-card:nth-child(3) { z-index: 3; }
+  .stack-card:nth-child(4) { z-index: 4; }
+  .stack-card.is-active {
+    flex-grow: 5;
+    z-index: 20;
+    box-shadow: -16px 0 38px rgba(0,0,0,0.32), 0 0 0 3px var(--aqua), 0 0 34px 2px rgba(34,203,225,0.5);
+  }
+
+  /* Fixed min width keeps the title from reflowing as the card narrows —
+     it just gets clipped by the card's overflow. */
+  .stack-card-body { min-width: 340px; padding: 2rem; }
+
+  /* Collapsed cards show only the clipped title; the rest fades in
+     once the card becomes active. */
+  .stack-card-foot {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+  .stack-card.is-active .stack-card-foot { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stack-card { transition: none; }
+}
 
 
 /* ══════════════════════════════════════════════
@@ -936,11 +932,46 @@
    Two marquee rows scrolling opposite directions, slowly.
 ══════════════════════════════════════════════ */
 
-.tm-section { background: var(--bg-light); overflow: hidden; }
+.tm-section { position: relative; background: var(--ink); overflow: hidden; }
+
+/* Parallax photo background — taller than the section so it can drift
+   without exposing gaps; transform driven by main.js on scroll. */
+.tm-bg {
+  position: absolute;
+  top: -20%;
+  left: 0;
+  width: 100%;
+  height: 140%;
+  background-color: var(--ink-soft);     /* fallback before the photo loads */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+  will-change: transform;
+}
+/* Dark gradient overlay — darker at top/bottom so it blends into the
+   adjacent dark sections, lighter in the middle so the photo shows. */
+.tm-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg,
+    rgba(7,32,47,0.94) 0%,
+    rgba(7,32,47,0.74) 22%,
+    rgba(7,32,47,0.74) 78%,
+    rgba(7,32,47,0.94) 100%);
+}
+.tm-section > .container { position: relative; z-index: 2; }
+
+/* Heading text on the now-dark section */
+.tm-section .section-head h2 { color: var(--white); }
+.tm-section .section-head p  { color: rgba(255,255,255,0.82); }
+.tm-section .eyebrow         { color: var(--aqua-lt); }
 
 /* Marquee viewport with left/right fade mask */
 .tm-marquee {
   position: relative;
+  z-index: 2;
   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 91%, transparent 100%);
           mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 91%, transparent 100%);
 }
