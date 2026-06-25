@@ -102,20 +102,16 @@
 
   <!-- ══════════════════════════════════════════
        HERO
-       Full-screen background carousel + centered content.
-       Two series buttons, each with a starting-price label beneath.
-       ⤵  DROP HERO PHOTOS IN:  images/hero/hero-1.jpg … hero-4.jpg
-          (landscape, ~2400px wide. Add/remove .hero-slide divs to match.)
+       Full-screen cinematic background video + centered content.
+       Video: videos/hero-video.mp4  ·  poster fallback: images/hero/hero-1.jpg
   ═══════════════════════════════════════════ -->
   <section id="hero">
 
-    <!-- Background carousel (crossfades via main.js) -->
-    <div class="hero-carousel" aria-hidden="true">
-      <div class="hero-slide is-active" style="background-image:url('images/hero/hero-1.jpg')"></div>
-      <div class="hero-slide" style="background-image:url('images/hero/hero-2.jpg')"></div>
-      <div class="hero-slide" style="background-image:url('images/hero/hero-3.jpg')"></div>
-      <div class="hero-slide" style="background-image:url('images/hero/hero-4.jpg')"></div>
-    </div>
+    <!-- Cinematic background video (muted, autoplay, loop) -->
+    <video class="hero-video" autoplay muted loop playsinline preload="auto"
+           poster="images/hero/hero-1.jpg">
+      <source src="videos/hero-video.mp4" type="video/mp4" />
+    </video>
     <div class="hero-overlay" aria-hidden="true"></div>
 
     <div class="container hero-inner">
@@ -153,13 +149,10 @@
       </div>
     </div>
 
-    <!-- Carousel dots -->
-    <div class="hero-dots" role="tablist" aria-label="Hero background slides">
-      <button class="hero-dot is-active" aria-label="Slide 1"></button>
-      <button class="hero-dot" aria-label="Slide 2"></button>
-      <button class="hero-dot" aria-label="Slide 3"></button>
-      <button class="hero-dot" aria-label="Slide 4"></button>
-    </div>
+    <!-- Scroll cue -->
+    <a href="#about" class="hero-scroll" aria-label="Scroll to explore">
+      <span></span>
+    </a>
   </section>
 
   <!-- ══════════════════════════════════════════
@@ -283,6 +276,43 @@
       </div>
     </div>
   </section>
+
+  <!-- ══════════════════════════════════════════
+       CREDENTIALS  (As Seen On + animated stats)
+  ═══════════════════════════════════════════ -->
+  <section id="credentials" class="creds-section">
+    <div class="container">
+
+      <div class="creds-asseen reveal fade-up">
+        <span class="creds-asseen-label">As Seen On</span>
+        <span class="creds-asseen-name">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="13" rx="2"/><path d="M8 3l4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Animal Planet — <em>Insane Pools: Off The Deep End</em>
+        </span>
+      </div>
+
+      <div class="creds-stats">
+        <div class="creds-stat reveal fade-up">
+          <span class="creds-stat-num" data-count="20" data-suffix="+">0</span>
+          <span class="creds-stat-label">Years of Artistry</span>
+        </div>
+        <div class="creds-stat reveal fade-up delay-1">
+          <span class="creds-stat-num" data-count="4">0</span>
+          <span class="creds-stat-label">Seasons on National TV</span>
+        </div>
+        <div class="creds-stat reveal fade-up delay-2">
+          <span class="creds-stat-num" data-count="200" data-suffix="+">0</span>
+          <span class="creds-stat-label">Custom Lagoons Built</span>
+        </div>
+        <div class="creds-stat reveal fade-up delay-3">
+          <span class="creds-stat-num" data-count="12">0</span>
+          <span class="creds-stat-label">Design Awards Won</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- ══════════════════════════════════════════
        POOL SERIES
        Two side-by-side cards. Each links to its dedicated page
@@ -455,6 +485,203 @@
   </section>
 
   <!-- ══════════════════════════════════════════
+       GALLERY  (Ridgeline-style: filter tabs, drag carousel,
+       frosted-glass blur overlay on hover)
+       ⤵  DROP IMAGES IN: images/gallery/gallery-1..12.jpg
+  ═══════════════════════════════════════════ -->
+  <section id="gallery" class="gallery-section">
+
+    <div class="container">
+      <div class="section-head is-centered">
+        <p class="eyebrow is-centered">Our Projects</p>
+        <h2>Explore Our Paradise Builds</h2>
+        <p>Drag, swipe, or filter to wander through our custom lagoons, grottos, and modern waterscapes.</p>
+      </div>
+
+      <div class="gallery-filters" role="tablist" aria-label="Filter projects by style">
+        <button class="gallery-filter-btn is-active" data-filter="all">All Projects</button>
+        <button class="gallery-filter-btn" data-filter="zen">Modern Zen</button>
+        <button class="gallery-filter-btn" data-filter="caribbean">Caribbean Cove</button>
+        <button class="gallery-filter-btn" data-filter="natural">Northern Natural</button>
+        <button class="gallery-filter-btn" data-filter="grotto">Grottos</button>
+      </div>
+
+      <p class="gallery-swipe-hint" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l-4 5 4 5M16 7l4 5-4 5"/></svg>
+        Drag or swipe to explore more projects
+      </p>
+    </div>
+
+    <div class="gallery-carousel-outer">
+      <div class="gallery-track-wrap" id="galleryTrackWrap">
+        <div class="gallery-track" id="galleryTrack">
+
+          <div class="gallery-card" data-category="zen">
+            <img class="gallery-card-img" src="images/gallery/gallery-1.jpg" alt="Modern Zen Retreat" loading="lazy" decoding="async" />
+            <div class="gallery-card-overlay" aria-hidden="true"></div>
+            <div class="gallery-card-info">
+              <h3 class="gallery-card-title">Modern Zen Retreat</h3>
+              <div class="gallery-card-line" aria-hidden="true"></div>
+              <a href="html/portfolio.html" class="gallery-card-link">View Project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+          </div>
+
+          <div class="gallery-card" data-category="caribbean">
+            <img class="gallery-card-img" src="images/gallery/gallery-2.jpg" alt="Caribbean Cove Lagoon" loading="lazy" decoding="async" />
+            <div class="gallery-card-overlay" aria-hidden="true"></div>
+            <div class="gallery-card-info">
+              <h3 class="gallery-card-title">Caribbean Cove Lagoon</h3>
+              <div class="gallery-card-line" aria-hidden="true"></div>
+              <a href="html/portfolio.html" class="gallery-card-link">View Project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+          </div>
+
+          <div class="gallery-card" data-category="grotto">
+            <img class="gallery-card-img" src="images/gallery/gallery-3.jpg" alt="Hidden Grotto & Waterfall" loading="lazy" decoding="async" />
+            <div class="gallery-card-overlay" aria-hidden="true"></div>
+            <div class="gallery-card-info">
+              <h3 class="gallery-card-title">Hidden Grotto &amp; Waterfall</h3>
+              <div class="gallery-card-line" aria-hidden="true"></div>
+              <a href="html/portfolio.html" class="gallery-card-link">View Project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+          </div>
+
+          <div class="gallery-card" data-category="natural">
+            <img class="gallery-card-img" src="images/gallery/gallery-4.jpg" alt="Northern Natural Springs" loading="lazy" decoding="async" />
+            <div class="gallery-card-overlay" aria-hidden="true"></div>
+            <div class="gallery-card-info">
+              <h3 class="gallery-card-title">Northern Natural Springs</h3>
+              <div class="gallery-card-line" aria-hidden="true"></div>
+              <a href="html/portfolio.html" class="gallery-card-link">View Project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+          </div>
+
+          <div class="gallery-card" data-category="zen">
+            <img class="gallery-card-img" src="images/gallery/gallery-5.jpg" alt="Glass-Edge Infinity" loading="lazy" decoding="async" />
+            <div class="gallery-card-overlay" aria-hidden="true"></div>
+            <div class="gallery-card-info">
+              <h3 class="gallery-card-title">Glass-Edge Infinity</h3>
+              <div class="gallery-card-line" aria-hidden="true"></div>
+              <a href="html/portfolio.html" class="gallery-card-link">View Project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+          </div>
+
+          <div class="gallery-card" data-category="caribbean">
+            <img class="gallery-card-img" src="images/gallery/gallery-6.jpg" alt="Island Paradise Pool" loading="lazy" decoding="async" />
+            <div class="gallery-card-overlay" aria-hidden="true"></div>
+            <div class="gallery-card-info">
+              <h3 class="gallery-card-title">Island Paradise Pool</h3>
+              <div class="gallery-card-line" aria-hidden="true"></div>
+              <a href="html/portfolio.html" class="gallery-card-link">View Project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+          </div>
+
+          <div class="gallery-card" data-category="grotto">
+            <img class="gallery-card-img" src="images/gallery/gallery-7.jpg" alt="Cavern Spa Retreat" loading="lazy" decoding="async" />
+            <div class="gallery-card-overlay" aria-hidden="true"></div>
+            <div class="gallery-card-info">
+              <h3 class="gallery-card-title">Cavern Spa Retreat</h3>
+              <div class="gallery-card-line" aria-hidden="true"></div>
+              <a href="html/portfolio.html" class="gallery-card-link">View Project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+          </div>
+
+          <div class="gallery-card" data-category="natural">
+            <img class="gallery-card-img" src="images/gallery/gallery-8.jpg" alt="Boulder Creek Lagoon" loading="lazy" decoding="async" />
+            <div class="gallery-card-overlay" aria-hidden="true"></div>
+            <div class="gallery-card-info">
+              <h3 class="gallery-card-title">Boulder Creek Lagoon</h3>
+              <div class="gallery-card-line" aria-hidden="true"></div>
+              <a href="html/portfolio.html" class="gallery-card-link">View Project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+          </div>
+
+          <div class="gallery-card" data-category="zen">
+            <img class="gallery-card-img" src="images/gallery/gallery-9.jpg" alt="Minimalist Water Garden" loading="lazy" decoding="async" />
+            <div class="gallery-card-overlay" aria-hidden="true"></div>
+            <div class="gallery-card-info">
+              <h3 class="gallery-card-title">Minimalist Water Garden</h3>
+              <div class="gallery-card-line" aria-hidden="true"></div>
+              <a href="html/portfolio.html" class="gallery-card-link">View Project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+          </div>
+
+          <div class="gallery-card" data-category="caribbean">
+            <img class="gallery-card-img" src="images/gallery/gallery-10.jpg" alt="Tropical Grotto Escape" loading="lazy" decoding="async" />
+            <div class="gallery-card-overlay" aria-hidden="true"></div>
+            <div class="gallery-card-info">
+              <h3 class="gallery-card-title">Tropical Grotto Escape</h3>
+              <div class="gallery-card-line" aria-hidden="true"></div>
+              <a href="html/portfolio.html" class="gallery-card-link">View Project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+          </div>
+
+          <div class="gallery-card" data-category="natural">
+            <img class="gallery-card-img" src="images/gallery/gallery-11.jpg" alt="Woodland Rock Pool" loading="lazy" decoding="async" />
+            <div class="gallery-card-overlay" aria-hidden="true"></div>
+            <div class="gallery-card-info">
+              <h3 class="gallery-card-title">Woodland Rock Pool</h3>
+              <div class="gallery-card-line" aria-hidden="true"></div>
+              <a href="html/portfolio.html" class="gallery-card-link">View Project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+          </div>
+
+          <div class="gallery-card" data-category="grotto">
+            <img class="gallery-card-img" src="images/gallery/gallery-12.jpg" alt="Cascade Rock Grotto" loading="lazy" decoding="async" />
+            <div class="gallery-card-overlay" aria-hidden="true"></div>
+            <div class="gallery-card-info">
+              <h3 class="gallery-card-title">Cascade Rock Grotto</h3>
+              <div class="gallery-card-line" aria-hidden="true"></div>
+              <a href="html/portfolio.html" class="gallery-card-link">View Project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+          </div>
+
+          <div class="gallery-card" data-category="zen">
+            <img class="gallery-card-img" src="images/gallery/gallery-13.jpg" alt="Floating Stone Spa" loading="lazy" decoding="async" />
+            <div class="gallery-card-overlay" aria-hidden="true"></div>
+            <div class="gallery-card-info">
+              <h3 class="gallery-card-title">Floating Stone Spa</h3>
+              <div class="gallery-card-line" aria-hidden="true"></div>
+              <a href="html/portfolio.html" class="gallery-card-link">View Project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+          </div>
+
+          <div class="gallery-card" data-category="caribbean">
+            <img class="gallery-card-img" src="images/gallery/gallery-14.jpg" alt="Lagoon Swim-Up Bar" loading="lazy" decoding="async" />
+            <div class="gallery-card-overlay" aria-hidden="true"></div>
+            <div class="gallery-card-info">
+              <h3 class="gallery-card-title">Lagoon Swim-Up Bar</h3>
+              <div class="gallery-card-line" aria-hidden="true"></div>
+              <a href="html/portfolio.html" class="gallery-card-link">View Project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+          </div>
+
+          <div class="gallery-card" data-category="natural">
+            <img class="gallery-card-img" src="images/gallery/gallery-15.jpg" alt="Spring-Fed Rock Pool" loading="lazy" decoding="async" />
+            <div class="gallery-card-overlay" aria-hidden="true"></div>
+            <div class="gallery-card-info">
+              <h3 class="gallery-card-title">Spring-Fed Rock Pool</h3>
+              <div class="gallery-card-line" aria-hidden="true"></div>
+              <a href="html/portfolio.html" class="gallery-card-link">View Project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+          </div>
+
+          <div class="gallery-card" data-category="grotto">
+            <img class="gallery-card-img" src="images/gallery/gallery-16.jpg" alt="Twin Waterfall Grotto" loading="lazy" decoding="async" />
+            <div class="gallery-card-overlay" aria-hidden="true"></div>
+            <div class="gallery-card-info">
+              <h3 class="gallery-card-title">Twin Waterfall Grotto</h3>
+              <div class="gallery-card-line" aria-hidden="true"></div>
+              <a href="html/portfolio.html" class="gallery-card-link">View Project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
        INSTAGRAM  (dark)
        Vertical "reel" cards that autoplay muted/looping.
        ⤵  DROP REEL VIDEOS IN: videos/reel-1..4.mp4  (vertical 9:16 mp4)
@@ -578,7 +805,7 @@
 
           <figure class="tm-card">
             <div class="tm-top">
-              <img class="tm-avatar" src="images/testimonials/t1.jpg" alt="Kelley &amp; Renée Johnson" width="64" height="64" loading="lazy" />
+              <img class="tm-avatar" src="images/testimonials/t1.png" alt="Kelley &amp; Renée Johnson" width="64" height="64" loading="lazy" />
               <div class="tm-id">
                 <span class="tm-name">Kelley &amp; Renée Johnson</span>
                 <span class="tm-role">Nokomis, FL</span>
@@ -598,7 +825,7 @@
 
           <figure class="tm-card">
             <div class="tm-top">
-              <img class="tm-avatar" src="images/testimonials/t2.jpg" alt="Dr. &amp; Mrs. Arno Loeffler" width="64" height="64" loading="lazy" />
+              <img class="tm-avatar" src="images/testimonials/t2.png" alt="Dr. &amp; Mrs. Arno Loeffler" width="64" height="64" loading="lazy" />
               <div class="tm-id">
                 <span class="tm-name">Dr. &amp; Mrs. Loeffler</span>
                 <span class="tm-role">Sarasota, FL</span>
@@ -618,7 +845,7 @@
 
           <figure class="tm-card">
             <div class="tm-top">
-              <img class="tm-avatar" src="images/testimonials/t3.jpg" alt="Mark Bennett" width="64" height="64" loading="lazy" />
+              <img class="tm-avatar" src="images/testimonials/t3.png" alt="Mark Bennett" width="64" height="64" loading="lazy" />
               <div class="tm-id">
                 <span class="tm-name">Mark Bennett</span>
                 <span class="tm-role">Naples, FL</span>
@@ -638,7 +865,7 @@
 
           <figure class="tm-card">
             <div class="tm-top">
-              <img class="tm-avatar" src="images/testimonials/t1.jpg" alt="Kelley &amp; Renée Johnson" width="64" height="64" loading="lazy" />
+              <img class="tm-avatar" src="images/testimonials/t1.png" alt="Kelley &amp; Renée Johnson" width="64" height="64" loading="lazy" />
               <div class="tm-id">
                 <span class="tm-name">Kelley &amp; Renée Johnson</span>
                 <span class="tm-role">Nokomis, FL</span>
@@ -658,7 +885,7 @@
 
           <figure class="tm-card">
             <div class="tm-top">
-              <img class="tm-avatar" src="images/testimonials/t2.jpg" alt="Dr. &amp; Mrs. Arno Loeffler" width="64" height="64" loading="lazy" />
+              <img class="tm-avatar" src="images/testimonials/t2.png" alt="Dr. &amp; Mrs. Arno Loeffler" width="64" height="64" loading="lazy" />
               <div class="tm-id">
                 <span class="tm-name">Dr. &amp; Mrs. Loeffler</span>
                 <span class="tm-role">Sarasota, FL</span>
@@ -678,7 +905,7 @@
 
           <figure class="tm-card">
             <div class="tm-top">
-              <img class="tm-avatar" src="images/testimonials/t3.jpg" alt="Mark Bennett" width="64" height="64" loading="lazy" />
+              <img class="tm-avatar" src="images/testimonials/t3.png" alt="Mark Bennett" width="64" height="64" loading="lazy" />
               <div class="tm-id">
                 <span class="tm-name">Mark Bennett</span>
                 <span class="tm-role">Naples, FL</span>
@@ -698,7 +925,7 @@
           
 <figure class="tm-card">
             <div class="tm-top">
-              <img class="tm-avatar" src="images/testimonials/t1.jpg" alt="Kelley &amp; Renée Johnson" width="64" height="64" loading="lazy" />
+              <img class="tm-avatar" src="images/testimonials/t1.png" alt="Kelley &amp; Renée Johnson" width="64" height="64" loading="lazy" />
               <div class="tm-id">
                 <span class="tm-name">Kelley &amp; Renée Johnson</span>
                 <span class="tm-role">Nokomis, FL</span>
@@ -718,7 +945,7 @@
 
           <figure class="tm-card">
             <div class="tm-top">
-              <img class="tm-avatar" src="images/testimonials/t2.jpg" alt="Dr. &amp; Mrs. Arno Loeffler" width="64" height="64" loading="lazy" />
+              <img class="tm-avatar" src="images/testimonials/t2.png" alt="Dr. &amp; Mrs. Arno Loeffler" width="64" height="64" loading="lazy" />
               <div class="tm-id">
                 <span class="tm-name">Dr. &amp; Mrs. Loeffler</span>
                 <span class="tm-role">Sarasota, FL</span>
@@ -738,7 +965,7 @@
 
           <figure class="tm-card">
             <div class="tm-top">
-              <img class="tm-avatar" src="images/testimonials/t3.jpg" alt="Mark Bennett" width="64" height="64" loading="lazy" />
+              <img class="tm-avatar" src="images/testimonials/t3.png" alt="Mark Bennett" width="64" height="64" loading="lazy" />
               <div class="tm-id">
                 <span class="tm-name">Mark Bennett</span>
                 <span class="tm-role">Naples, FL</span>
@@ -765,7 +992,7 @@
 
           <figure class="tm-card">
             <div class="tm-top">
-              <img class="tm-avatar" src="images/testimonials/t4.jpg" alt="The Alvarez Family" width="64" height="64" loading="lazy" />
+              <img class="tm-avatar" src="images/testimonials/t4.png" alt="The Alvarez Family" width="64" height="64" loading="lazy" />
               <div class="tm-id">
                 <span class="tm-name">The Alvarez Family</span>
                 <span class="tm-role">Tampa, FL</span>
@@ -785,7 +1012,7 @@
 
           <figure class="tm-card">
             <div class="tm-top">
-              <img class="tm-avatar" src="images/testimonials/t5.jpg" alt="Susan Hargrove" width="64" height="64" loading="lazy" />
+              <img class="tm-avatar" src="images/testimonials/t5.png" alt="Susan Hargrove" width="64" height="64" loading="lazy" />
               <div class="tm-id">
                 <span class="tm-name">Susan Hargrove</span>
                 <span class="tm-role">Fort Myers, FL</span>
@@ -805,7 +1032,7 @@
 
           <figure class="tm-card">
             <div class="tm-top">
-              <img class="tm-avatar" src="images/testimonials/t6.jpg" alt="James &amp; Carol Whitfield" width="64" height="64" loading="lazy" />
+              <img class="tm-avatar" src="images/testimonials/t6.png" alt="James &amp; Carol Whitfield" width="64" height="64" loading="lazy" />
               <div class="tm-id">
                 <span class="tm-name">James &amp; Carol Whitfield</span>
                 <span class="tm-role">Bradenton, FL</span>
@@ -825,7 +1052,7 @@
 
 <figure class="tm-card">
             <div class="tm-top">
-              <img class="tm-avatar" src="images/testimonials/t4.jpg" alt="The Alvarez Family" width="64" height="64" loading="lazy" />
+              <img class="tm-avatar" src="images/testimonials/t4.png" alt="The Alvarez Family" width="64" height="64" loading="lazy" />
               <div class="tm-id">
                 <span class="tm-name">The Alvarez Family</span>
                 <span class="tm-role">Tampa, FL</span>
@@ -845,7 +1072,7 @@
 
           <figure class="tm-card">
             <div class="tm-top">
-              <img class="tm-avatar" src="images/testimonials/t5.jpg" alt="Susan Hargrove" width="64" height="64" loading="lazy" />
+              <img class="tm-avatar" src="images/testimonials/t5.png" alt="Susan Hargrove" width="64" height="64" loading="lazy" />
               <div class="tm-id">
                 <span class="tm-name">Susan Hargrove</span>
                 <span class="tm-role">Fort Myers, FL</span>
@@ -865,7 +1092,7 @@
 
           <figure class="tm-card">
             <div class="tm-top">
-              <img class="tm-avatar" src="images/testimonials/t6.jpg" alt="James &amp; Carol Whitfield" width="64" height="64" loading="lazy" />
+              <img class="tm-avatar" src="images/testimonials/t6.png" alt="James &amp; Carol Whitfield" width="64" height="64" loading="lazy" />
               <div class="tm-id">
                 <span class="tm-name">James &amp; Carol Whitfield</span>
                 <span class="tm-role">Bradenton, FL</span>
@@ -885,7 +1112,7 @@
 
 <figure class="tm-card">
             <div class="tm-top">
-              <img class="tm-avatar" src="images/testimonials/t4.jpg" alt="The Alvarez Family" width="64" height="64" loading="lazy" />
+              <img class="tm-avatar" src="images/testimonials/t4.png" alt="The Alvarez Family" width="64" height="64" loading="lazy" />
               <div class="tm-id">
                 <span class="tm-name">The Alvarez Family</span>
                 <span class="tm-role">Tampa, FL</span>
@@ -905,7 +1132,7 @@
 
           <figure class="tm-card">
             <div class="tm-top">
-              <img class="tm-avatar" src="images/testimonials/t5.jpg" alt="Susan Hargrove" width="64" height="64" loading="lazy" />
+              <img class="tm-avatar" src="images/testimonials/t5.png" alt="Susan Hargrove" width="64" height="64" loading="lazy" />
               <div class="tm-id">
                 <span class="tm-name">Susan Hargrove</span>
                 <span class="tm-role">Fort Myers, FL</span>
@@ -925,7 +1152,7 @@
 
           <figure class="tm-card">
             <div class="tm-top">
-              <img class="tm-avatar" src="images/testimonials/t6.jpg" alt="James &amp; Carol Whitfield" width="64" height="64" loading="lazy" />
+              <img class="tm-avatar" src="images/testimonials/t6.png" alt="James &amp; Carol Whitfield" width="64" height="64" loading="lazy" />
               <div class="tm-id">
                 <span class="tm-name">James &amp; Carol Whitfield</span>
                 <span class="tm-role">Bradenton, FL</span>

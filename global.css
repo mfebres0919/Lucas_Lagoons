@@ -13,11 +13,12 @@
 :root {
 
   /* ── Brand Colors — Lucas Lagoons tropical aqua ── */
-  --aqua:        #18BFD8;   /* primary brand aqua */
+  --aqua:        #22cbe1;   /* primary brand aqua */
   --aqua-dk:     #1399AE;   /* hover / deep */
   --aqua-darker: #0C6F80;   /* darkest accents */
-  --aqua-lt:     #4FD8EE;   /* bright aqua — accents, eyebrows */
+  --aqua-lt:     #00e3f3;   /* bright aqua — accents, eyebrows */
   --glow:        #9AECFB;   /* light highlight / glow */
+  --lime-green: #3cff00;   /* accent for CTA, buttons, highlights */
 
   /* ── Neutrals — deep teal-navy dark sections ── */
   --ink:        #07202F;   /* near-black navy — dark sections, footer base */
@@ -211,7 +212,7 @@ p {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: var(--aqua);
+  background: var(--lime-green);
   color: var(--ink);
   font-family: var(--font-display);
   font-weight: 700;
@@ -219,7 +220,7 @@ p {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   padding: 0.85rem 1.6rem;
-  border: 2px solid var(--aqua);
+  border: 2px solid var(--lime-green);
   border-radius: var(--radius-sm);
   transition: background var(--transition), border-color var(--transition), transform var(--transition), box-shadow var(--transition);
   white-space: nowrap;

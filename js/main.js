@@ -251,6 +251,131 @@
     });
   });
 
+  /* ── Gallery: filter tabs · desktop drag · mobile swipe/tap ── */
+  (function galleryCarousel() {
+    var track = document.getElementById('galleryTrack');
+    var wrap  = document.getElementById('galleryTrackWrap');
+    var btns  = document.querySelectorAll('.gallery-filter-btn');
+    if (!track || !wrap) return;
+
+    var currentOffset = 0;
+
+    function visibleCards() { return Array.prototype.slice.call(track.querySelectorAll('.gallery-card:not(.is-hidden)')); }
+    function perView() { if (window.innerWidth >= 1024) return 4; if (window.innerWidth >= 600) return 2; return 1; }
+    function cardWidth() { var c = visibleCards()[0]; return c ? c.offsetWidth : 0; }
+    function currentX() { var m = new DOMMatrix(window.getComputedStyle(track).transform); return m.m41; }
+
+    function goToOffset(index) {
+      var cards = visibleCards();
+      var max = Math.max(0, cards.length - perView());
+      currentOffset = Math.min(Math.max(index, 0), max);
+      track.classList.remove('is-dragging');
+      track.style.transform = 'translateX(-' + (currentOffset * cardWidth()) + 'px)';
+    }
+
+    window.addEventListener('resize', function () { currentOffset = 0; track.style.transform = 'translateX(0)'; }, { passive: true });
+
+    /* Filter tabs */
+    btns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        btns.forEach(function (b) { b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+        var filter = btn.dataset.filter;
+        track.querySelectorAll('.gallery-card').forEach(function (card) {
+          card.classList.toggle('is-hidden', filter !== 'all' && card.dataset.category !== filter);
+        });
+        currentOffset = 0;
+        track.style.transform = 'translateX(0)';
+      });
+    });
+
+    /* Desktop drag */
+    var dragStartX = 0, dragStartOff = 0, isDragging = false, hasDragged = false;
+    wrap.addEventListener('mousedown', function (e) {
+      if (window.innerWidth < 1024) return;
+      isDragging = true; hasDragged = false;
+      dragStartX = e.clientX; dragStartOff = currentX();
+      track.classList.add('is-dragging'); wrap.classList.add('is-dragging');
+      e.preventDefault();
+    });
+    window.addEventListener('mousemove', function (e) {
+      if (!isDragging) return;
+      var dx = e.clientX - dragStartX;
+      if (Math.abs(dx) > 4) hasDragged = true;
+      var cards = visibleCards();
+      var maxPx = Math.max(0, cards.length - perView()) * cardWidth();
+      var newX = Math.min(0, Math.max(dragStartOff + dx, -maxPx));
+      track.style.transform = 'translateX(' + newX + 'px)';
+    });
+    window.addEventListener('mouseup', function () {
+      if (!isDragging) return;
+      isDragging = false; wrap.classList.remove('is-dragging');
+      if (hasDragged) {
+        var cw = cardWidth();
+        if (cw) goToOffset(Math.round(-currentX() / cw));
+      }
+    });
+    /* Swallow the click right after a drag so it doesn't follow a link */
+    wrap.addEventListener('click', function (e) { if (hasDragged) { e.preventDefault(); hasDragged = false; } }, true);
+
+    /* Mobile tap-to-reveal */
+    var touchedCard = null, touchStartX = 0, touchStartY = 0, didScroll = false;
+    var isTouch = function () { return window.matchMedia('(hover: none)').matches; };
+    track.addEventListener('touchstart', function (e) {
+      touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY; didScroll = false;
+    }, { passive: true });
+    track.addEventListener('touchmove', function (e) {
+      if (Math.abs(e.touches[0].clientX - touchStartX) > 8 || Math.abs(e.touches[0].clientY - touchStartY) > 8) didScroll = true;
+    }, { passive: true });
+    track.addEventListener('touchend', function (e) {
+      if (didScroll || !isTouch()) return;
+      var card = e.target.closest('.gallery-card');
+      if (!card) { if (touchedCard) { touchedCard.classList.remove('is-touched'); touchedCard = null; } return; }
+      if (card === touchedCard) { card.classList.remove('is-touched'); touchedCard = null; }
+      else { e.preventDefault(); if (touchedCard) touchedCard.classList.remove('is-touched'); card.classList.add('is-touched'); touchedCard = card; }
+    });
+    document.addEventListener('touchend', function (e) {
+      if (touchedCard && !track.contains(e.target)) { touchedCard.classList.remove('is-touched'); touchedCard = null; }
+    }, { passive: true });
+  })();
+
+  /* ── Animated stat counters ───────────────────────
+     Count up from 0 → data-count when scrolled into view. */
+  (function statCounters() {
+    var nums = Array.prototype.slice.call(document.querySelectorAll('[data-count]'));
+    if (!nums.length) return;
+
+    function finalText(el) { return el.getAttribute('data-count') + (el.getAttribute('data-suffix') || ''); }
+
+    if (!('IntersectionObserver' in window) || !window.requestAnimationFrame) {
+      nums.forEach(function (el) { el.textContent = finalText(el); });
+      return;
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        io.unobserve(el);
+        var target = parseInt(el.getAttribute('data-count'), 10) || 0;
+        var suffix = el.getAttribute('data-suffix') || '';
+        var dur = 1500;
+        var startTs = null;
+        function tick(ts) {
+          if (startTs === null) startTs = ts;
+          var p = Math.min((ts - startTs) / dur, 1);
+          var eased = p * p * (3 - 2 * p);               // smoothstep
+          el.textContent = Math.floor(eased * target) + suffix;
+          if (p < 1) window.requestAnimationFrame(tick);
+          else el.textContent = target + suffix;
+        }
+        window.requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.4 });
+
+    nums.forEach(function (el) { io.observe(el); });
+  })();
+
   /* ── Quote wizard ─────────────────────────────────
      Multi-step form. Step 1 picks the service, then the
      sequence branches by series. Validates each step before
