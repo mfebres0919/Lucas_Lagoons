@@ -56,10 +56,10 @@
     { id: 'hero',         href: 'index.html' },
     { id: 'about',        href: '#about' },
     { id: 'series',       href: '#series' },
-    { id: 'portfolio',    href: '#portfolio' },
+    { id: 'portfolio',    href: 'html/portfolio.html' },
     { id: 'work',         href: '#work' },
     { id: 'testimonials', href: '#testimonials' },
-    { id: 'blog',         href: '#blog' },
+    { id: 'blog',         href: 'html/blog.html' },
     { id: 'contact',      href: '#contact' }
   ];
   var spyLinks = {};
@@ -635,6 +635,71 @@
     buildDots();
     go(0);
     start();
+  })();
+
+  /* ── Portfolio listing: filter project cards ── */
+  (function portfolioFilter() {
+    var btns  = Array.prototype.slice.call(document.querySelectorAll('.pf-filter-btn'));
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.pf-card'));
+    if (!btns.length || !cards.length) return;
+    var empty = document.querySelector('.pf-empty');
+    btns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        btns.forEach(function (b) { b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+        var f = btn.getAttribute('data-filter');
+        var shown = 0;
+        cards.forEach(function (c) {
+          var show = f === 'all' || c.getAttribute('data-category') === f;
+          c.classList.toggle('is-hidden', !show);
+          if (show) shown++;
+        });
+        if (empty) empty.style.display = shown ? 'none' : 'block';
+      });
+    });
+  })();
+
+  /* ── Project page: photo-grid lightbox ── */
+  (function projectGallery() {
+    var photos = Array.prototype.slice.call(document.querySelectorAll('.pj-photo'));
+    var lb = document.getElementById('pfLightbox');
+    if (!photos.length || !lb) return;
+    var lbImg = document.getElementById('pfLbImg');
+    var lbCap = document.getElementById('pfLbCaption');
+    var index = 0;
+
+    function render() {
+      var it = photos[index];
+      if (!it) return;
+      lbImg.src = it.getAttribute('data-full');
+      lbImg.alt = it.getAttribute('data-title') || '';
+      lbCap.innerHTML = '<small>' + (it.getAttribute('data-cat') || '') + '</small>' + (it.getAttribute('data-title') || '');
+    }
+    function step(dir) { index = (index + dir + photos.length) % photos.length; render(); }
+    function open(it) {
+      index = photos.indexOf(it);
+      render();
+      lb.classList.add('is-open');
+      lb.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function close() {
+      lb.classList.remove('is-open');
+      lb.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    photos.forEach(function (it) { it.addEventListener('click', function (e) { e.preventDefault(); open(it); }); });
+    lb.querySelector('.pf-lb-close').addEventListener('click', close);
+    lb.querySelector('.pf-lb-prev').addEventListener('click', function (e) { e.stopPropagation(); step(-1); });
+    lb.querySelector('.pf-lb-next').addEventListener('click', function (e) { e.stopPropagation(); step(1); });
+    lb.addEventListener('click', function (e) { if (e.target === lb || e.target.classList.contains('pf-lb-stage')) close(); });
+    document.addEventListener('keydown', function (e) {
+      if (!lb.classList.contains('is-open')) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowLeft') step(-1);
+      else if (e.key === 'ArrowRight') step(1);
+    });
   })();
 
   /* ── Scroll-to-top ───────────────────────────── */

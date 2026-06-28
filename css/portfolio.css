@@ -1,0 +1,349 @@
+/* ============================================================
+   LUCAS LAGOONS — css/portfolio.css
+   Portfolio LISTING page (project cards → project.html) AND
+   Project DETAIL page (full write-up + photo grid + lightbox).
+   Uses .page-hero from global.css.
+   ============================================================ */
+
+/* ── Listing section (with decorative wave-lines bg) ── */
+.pf-section {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-white);
+  --wave-color: rgba(34, 203, 225, 0.07);
+  --wave-width: 1.5px;
+}
+.pf-section > .container { position: relative; z-index: 1; }
+
+.pf-intro { text-align: center; max-width: 680px; margin: 0 auto 2.5rem; }
+.pf-intro p { color: var(--text-body); margin-top: 1rem; }
+
+/* Stat strip */
+.pf-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem 3rem;
+  margin: 0 auto 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid var(--grey-200);
+}
+.pf-stat { text-align: center; }
+.pf-stat-num { display: block; font-family: var(--font-display); font-weight: 900; font-size: clamp(2rem, 5vw, 2.8rem); line-height: 1; color: var(--aqua-dk); }
+.pf-stat-label { font-family: var(--font-display); font-weight: 700; font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+
+/* ── Filter tabs (no radius) ── */
+.pf-filters { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.6rem; margin-bottom: 2.5rem; }
+.pf-filter-btn {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  background: transparent;
+  border: 1.5px solid var(--grey-300);
+  padding: 0.6rem 1.3rem;
+  border-radius: 0;
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition), color var(--transition);
+}
+.pf-filter-btn:hover { border-color: var(--aqua); color: var(--aqua-dk); }
+.pf-filter-btn.is-active { background: var(--aqua); border-color: var(--aqua); color: var(--ink); }
+
+/* ── Listing grid + cards (description visible, links to detail page) ── */
+.pf-grid { display: grid; grid-template-columns: 1fr; gap: 1.75rem; }
+@media (min-width: 600px)  { .pf-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1000px) { .pf-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.pf-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border: 1px solid var(--grey-200);
+  overflow: hidden;
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+.pf-card.is-hidden { display: none; }
+.pf-card:hover { box-shadow: 0 16px 44px rgba(0,0,0,0.12); transform: translateY(-4px); }
+
+.pf-card-media { position: relative; overflow: hidden; aspect-ratio: 4/3; background: var(--ink-soft); }
+.pf-card-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.25,1,0.5,1); }
+.pf-card:hover .pf-card-media img { transform: scale(1.06); }
+.pf-card-cat {
+  position: absolute;
+  top: 1rem; left: 1rem;
+  background: var(--aqua);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.7rem;
+}
+
+.pf-card-body { display: flex; flex-direction: column; flex: 1; gap: 0.7rem; padding: 1.5rem; }
+.pf-card-title { font-family: var(--font-display); font-weight: 800; font-size: 1.3rem; text-transform: uppercase; letter-spacing: 0.01em; color: var(--text-primary); line-height: 1.2; transition: color var(--transition); }
+.pf-card:hover .pf-card-title { color: var(--aqua-dk); }
+.pf-card-desc { font-size: 0.9rem; line-height: 1.65; color: var(--text-body); flex: 1; }
+.pf-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: auto;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--aqua-dk);
+  transition: gap var(--transition);
+}
+.pf-card:hover .pf-card-link { gap: 0.65rem; }
+.pf-card-link svg { width: 15px; height: 15px; }
+
+.pf-empty { text-align: center; color: var(--text-muted); padding: 3rem 0; display: none; }
+
+/* ── Closing CTA band (with bg image) ── */
+.pf-cta {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  padding: 5rem 0;
+  background: var(--ink);
+}
+.pf-cta-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--ink-soft);
+}
+.pf-cta::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(7,32,47,0.82) 0%, rgba(7,32,47,0.9) 100%);
+}
+.pf-cta .container { position: relative; z-index: 2; }
+.pf-cta h2 { color: var(--white); margin-bottom: 1rem; }
+.pf-cta p { color: rgba(255,255,255,0.85); max-width: 560px; margin: 0 auto 2rem; }
+.pf-cta-btns { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+
+
+/* ════════════════════════════════════════════════════════
+   PROJECT DETAIL PAGE
+════════════════════════════════════════════════════════ */
+.project-section { background: var(--bg-white); }
+.project-wrap { max-width: 980px; margin: 0 auto; }
+
+.project-featured { width: 100%; aspect-ratio: 16/9; object-fit: cover; margin-bottom: 1.5rem; }
+
+.project-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem;
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--grey-200);
+}
+.project-meta-item { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--text-muted); }
+.project-meta-item svg { width: 15px; height: 15px; color: var(--aqua); }
+
+.project-body p { margin-bottom: 1.4rem; }
+.project-lead { font-size: 1.18rem; line-height: 1.7; color: var(--text-primary); font-weight: 500; margin-bottom: 1.75rem; }
+.project-body h2 { font-size: clamp(1.5rem, 3.2vw, 2.1rem); margin: 2.5rem 0 1rem; }
+.project-body h3 { font-size: clamp(1.2rem, 2.6vw, 1.6rem); margin: 2rem 0 0.85rem; }
+
+/* Photo grid (lightbox) — no radius per request */
+.project-gallery-head { text-align: center; margin: 3.5rem 0 1.75rem; }
+.project-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.85rem;
+}
+@media (min-width: 560px) { .project-gallery { grid-template-columns: repeat(3, 1fr); gap: 1rem; } }
+.pj-photo {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 1/1;
+  background: var(--ink-soft);
+  cursor: pointer;
+}
+.pj-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.25,1,0.5,1); }
+.pj-photo:hover img { transform: scale(1.08); }
+.pj-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(7,32,47,0.35);
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+.pj-photo:hover::after { opacity: 1; }
+.pj-photo-icon {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  opacity: 0;
+  transform: scale(0.7);
+  transition: opacity var(--transition), transform var(--transition);
+}
+.pj-photo:hover .pj-photo-icon { opacity: 1; transform: scale(1); }
+.pj-photo-icon svg { width: 26px; height: 26px; }
+
+/* Project video */
+.project-video-head { text-align: center; margin: 3.5rem 0 1.5rem; }
+.project-video {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: var(--ink);
+  overflow: hidden;
+}
+.project-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.project-video::after { content: ''; position: absolute; inset: 0; background: rgba(7,32,47,0.4); transition: background var(--transition); }
+.project-video:hover::after { background: rgba(7,32,47,0.25); }
+.project-video-play {
+  position: relative;
+  z-index: 1;
+  width: 78px; height: 78px;
+  border-radius: 50%;
+  background: var(--aqua);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 40px rgba(34,203,225,0.5);
+  transition: transform var(--transition);
+}
+.project-video:hover .project-video-play { transform: scale(1.08); }
+.project-video-play svg { width: 30px; height: 30px; margin-left: 4px; }
+
+/* Prev / next project nav */
+.project-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--grey-200);
+}
+.project-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  transition: color var(--transition);
+  max-width: 45%;
+}
+.project-nav a:hover { color: var(--aqua-dk); }
+.project-nav svg { width: 16px; height: 16px; flex-shrink: 0; }
+.project-nav .is-disabled { opacity: 0.35; pointer-events: none; }
+
+/* Sidebar widgets specific to the project page (reuses .widget from blog.css) */
+.widget-specs { display: flex; flex-direction: column; }
+.widget-specs li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--grey-200);
+}
+.widget-specs li:last-child { border-bottom: none; }
+.widget-specs span {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+.widget-specs strong { color: var(--text-primary); font-weight: 600; font-size: 0.9rem; text-align: right; }
+
+.widget-cta { background: var(--ink); border-color: var(--ink); text-align: center; }
+.widget-cta h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 0.6rem;
+}
+.widget-cta p { color: rgba(255,255,255,0.78); font-size: 0.9rem; margin-bottom: 1.25rem; }
+.widget-cta .btn-primary { width: 100%; justify-content: center; }
+
+
+/* ── Lightbox (shared by project gallery) ── */
+.pf-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 13, 20, 0.94);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition), visibility var(--transition);
+}
+.pf-lightbox.is-open { opacity: 1; visibility: visible; }
+.pf-lb-stage { position: relative; max-width: min(1100px, 92vw); max-height: 86vh; text-align: center; }
+.pf-lb-img { max-width: 100%; max-height: 80vh; box-shadow: 0 24px 80px rgba(0,0,0,0.6); }
+.pf-lb-caption { margin-top: 1rem; font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--white); }
+.pf-lb-caption small { display: block; font-size: 0.72rem; letter-spacing: 0.14em; color: var(--aqua-lt); margin-bottom: 0.3rem; }
+.pf-lb-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+.pf-lb-btn:hover { background: var(--aqua); color: var(--ink); border-color: var(--aqua); }
+.pf-lb-prev { left: -1.5rem; }
+.pf-lb-next { right: -1.5rem; }
+.pf-lb-btn svg { width: 22px; height: 22px; }
+@media (max-width: 700px) {
+  .pf-lb-prev { left: 0.5rem; }
+  .pf-lb-next { right: 0.5rem; }
+  .pf-lb-btn { width: 42px; height: 42px; background: rgba(5,13,20,0.5); }
+}
+.pf-lb-close {
+  position: fixed;
+  top: 1.5rem; right: 1.5rem;
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+.pf-lb-close:hover { background: var(--aqua); color: var(--ink); border-color: var(--aqua); }
+.pf-lb-close svg { width: 22px; height: 22px; }
